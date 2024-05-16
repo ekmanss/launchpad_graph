@@ -1,0 +1,76 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TokenFactory
+    network: blast-testnet
+    source:
+      address: "0x7DDa62DCfA6Afc3347a56027d5C872a14e14d4AD"
+      abi: TokenFactory
+      startBlock: 5544454
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: TokenFactory
+          file: ./abis/TokenFactory.json
+        - name: ERC20Abi
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: CreateToken(indexed address,indexed bytes32,string,string)
+          handler: handleCreateToken
+      file: ./src/LaunchPad.ts
+
+
+  - kind: ethereum
+    name: LaunchpadContract
+    network: blast-testnet
+    source:
+      address: "0x5A8002108516Df2047a1f809F7d03BBd3A02ad54"
+      abi: LaunchpadContract
+      startBlock: 5544450
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: LaunchpadContract
+          file: ./abis/LaunchpadContract.json
+        - name: ERC20Abi
+          file: ./abis/ERC20.json
+        - name: Pool
+          file: ./abis/pool.json
+      eventHandlers:
+        - event: CreatePool(indexed address,indexed address,bool)
+          handler: handleCreatePool
+      file: ./src/LaunchPad.ts
+
+
+templates:
+  - kind: ethereum/contract
+    name: Pool
+    network: blast-testnet
+    source:
+      abi: Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: Pool
+          file: ./abis/pool.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+      file: ./src/Pool.ts
