@@ -2,6 +2,9 @@ import {ERC20Abi, Transfer} from "../generated/templates/Token/ERC20Abi";
 import {Address, BigDecimal, BigInt} from "@graphprotocol/graph-ts";
 import {getToken} from "./entity/Token";
 import {getHolder} from "./entity/Holder";
+import {ADDRESS_ZERO} from "./utils/constants";
+
+import {Launchpad_address} from "../config"
 
 
 export function handleTransfer(event: Transfer): void {
@@ -43,10 +46,10 @@ export function handleTransfer(event: Transfer): void {
 
 
     let token_holder_list = token_entity.holder
-    if (token_holder_list.indexOf(from_holder_id) == -1) {
+    if (token_holder_list.indexOf(from_holder_id) == -1 && transfer_from != ADDRESS_ZERO && transfer_from != Launchpad_address) {
         token_holder_list.push(from_holder_id)
     }
-    if (token_holder_list.indexOf(to_holder_id) == -1) {
+    if (token_holder_list.indexOf(to_holder_id) == -1 && transfer_to != ADDRESS_ZERO && transfer_to != Launchpad_address) {
         token_holder_list.push(to_holder_id)
     }
     token_entity.holder = token_holder_list
