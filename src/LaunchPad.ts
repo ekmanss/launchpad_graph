@@ -20,6 +20,8 @@ export function handleCreateToken(event: CreateToken): void {
     const token_id = event.params.token.toHexString()
     let token_entity = getToken(token_id)
     token_entity.tokenKey = token_key
+    token_entity.createdAtTimestamp = event.block.timestamp
+    token_entity.createdOrigin = event.transaction.from
     token_entity.save()
 
 }

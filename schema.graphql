@@ -1,3 +1,13 @@
+type Status @entity {
+    id: ID!
+    totalSwapUser: BigInt!
+}
+
+type User @entity {
+    id: ID!
+    address: String!
+}
+
 type Token @entity {
     id: ID!
     address: String!
@@ -5,6 +15,9 @@ type Token @entity {
     symbol: String!
     decimals: BigInt!
     tokenKey: String!
+    userCount: BigInt!
+    createdAtTimestamp: BigInt!
+    createdOrigin: Bytes!
     tokenInfo: TokenInfo!
     launchPoolInfo: TokenLaunchPoolInfo
 }
