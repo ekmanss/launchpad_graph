@@ -8,6 +8,15 @@ type User @entity {
     address: String!
 }
 
+type Holder @entity {
+    id: ID!
+    userAddress: String!
+    tokenAddress: String!
+    balance: BigInt!
+    balance_formatted: BigDecimal
+    ratio: BigDecimal!
+}
+
 type Token @entity {
     id: ID!
     address: String!
@@ -20,6 +29,7 @@ type Token @entity {
     createdOrigin: Bytes!
     tokenInfo: TokenInfo!
     launchPoolInfo: TokenLaunchPoolInfo
+    holder: [Holder!]!
 }
 
 type TokenLaunchPoolInfo @entity {

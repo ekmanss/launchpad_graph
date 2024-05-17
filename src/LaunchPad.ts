@@ -3,7 +3,7 @@ import {CreatePool} from "../generated/LaunchpadContract/LaunchpadContract";
 import {Pool} from "../generated/LaunchpadContract/Pool";
 import {ERC20Abi} from "../generated/TokenFactory/ERC20Abi"
 
-import {Pool as PoolTemplate} from "../generated/templates"
+import {Pool as PoolTemplate, Token as TokenTemplate} from "../generated/templates"
 
 
 import {Token, TokenInfo, Pool as PoolEntity} from "../generated/schema";
@@ -23,6 +23,8 @@ export function handleCreateToken(event: CreateToken): void {
     token_entity.createdAtTimestamp = event.block.timestamp
     token_entity.createdOrigin = event.transaction.from
     token_entity.save()
+
+    TokenTemplate.create(event.params.token)
 
 }
 

@@ -36,6 +36,7 @@ export function getToken(address: string): Token {
         token.createdAtTimestamp = BigInt.zero()
         token.createdOrigin = Address.zero()
         token.tokenInfo = tokenInfo.id
+        token.holder = []
 
         token.save()
     }

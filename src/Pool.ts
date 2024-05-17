@@ -1,6 +1,6 @@
 import {Swap as SwapEvent} from "../generated/templates/Pool/Pool";
 import {Swap, Status, User} from "../generated/schema";
-import {BigInt} from "@graphprotocol/graph-ts";
+import {BigDecimal, BigInt} from "@graphprotocol/graph-ts";
 
 import {Pool as PoolEntity} from "../generated/schema";
 import {getPool} from "./entity/Pool";
@@ -34,6 +34,13 @@ export function handleSwap(event: SwapEvent): void {
     swap.origin = event.transaction.from
     swap.amount0 = amount0
     swap.amount1 = amount1
+
+    if(swap.amount0.lt(BigDecimal.zero())){
+        swap.amount0 = swap.amount0.times(BigInt.fromI32(-1).toBigDecimal())
+    }
+    if(swap.amount1.lt(BigDecimal.zero())){
+        swap.amount1 = swap.amount1.times(BigInt.fromI32(-1).toBigDecimal())
+    }
 
     swap.save()
 
