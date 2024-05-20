@@ -11,6 +11,8 @@ import {
 import {getToken} from "./entity/Token";
 import {getSwap} from "./entity/Swap";
 
+import {WETH} from "../config"
+
 
 export function handleSwap(event: SwapEvent): void {
     let pool = getPool(event.address.toHexString())
@@ -35,11 +37,29 @@ export function handleSwap(event: SwapEvent): void {
     swap.amount0 = amount0
     swap.amount1 = amount1
 
-    if(swap.amount0.lt(BigDecimal.zero())){
-        swap.amount0 = swap.amount0.times(BigInt.fromI32(-1).toBigDecimal())
+    // if(swap.amount0.lt(BigDecimal.zero())){
+    //     swap.amount0 = swap.amount0.times(BigInt.fromI32(-1).toBigDecimal())
+    // }
+    // if(swap.amount1.lt(BigDecimal.zero())){
+    //     swap.amount1 = swap.amount1.times(BigInt.fromI32(-1).toBigDecimal())
+    // }
+
+    if (token0.id == WETH) {
+        // if weth amount > 0  buy(0)
+        if(amount0.gt(BigDecimal.zero())){
+            swap.type = BigInt.fromI32(0)
+        }else{
+            swap.type = BigInt.fromI32(1)
+
+        }
     }
-    if(swap.amount1.lt(BigDecimal.zero())){
-        swap.amount1 = swap.amount1.times(BigInt.fromI32(-1).toBigDecimal())
+    if (token1.id == WETH) {
+        // if weth amount > 0  buy(0)
+        if(amount1.gt(BigDecimal.zero())){
+            swap.type = BigInt.fromI32(0)
+        }else{
+            swap.type = BigInt.fromI32(1)
+        }
     }
 
     swap.save()
@@ -88,7 +108,6 @@ export function handleSwap(event: SwapEvent): void {
         // update token status
         token1Status.userCount = token1Status.userCount.plus(BigInt.fromI32(1))
     }
-
 
 
     status.save()

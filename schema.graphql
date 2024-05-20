@@ -58,6 +58,7 @@ type Swap @entity {
     # transaction hash + "#" + index in swaps Transaction array
     id: ID!
     # pointer to transaction
+    type: BigInt!
     transaction: String!
     # timestamp of transaction
     timestamp: BigInt!

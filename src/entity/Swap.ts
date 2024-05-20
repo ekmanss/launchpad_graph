@@ -15,6 +15,7 @@ export function getSwap(address: string): Swap {
         swap.origin = Bytes.empty()
         swap.amount0 = BigDecimal.zero()
         swap.amount1 = BigDecimal.zero()
+        swap.type = BigInt.zero()
 
         swap.save()
     }
