@@ -8,9 +8,9 @@ dataSources:
     name: TokenFactory
     network: blast-testnet
     source:
-      address: "0x7DDa62DCfA6Afc3347a56027d5C872a14e14d4AD"
+      address: "0xf3a2b2F2B89CA960Fc0f8E12302512F53B3E08F6"
       abi: TokenFactory
-      startBlock: 5544454
+      startBlock: 5837004
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -32,9 +32,9 @@ dataSources:
     name: LaunchpadContract
     network: blast-testnet
     source:
-      address: "0x5A8002108516Df2047a1f809F7d03BBd3A02ad54"
+      address: "0xa5799672484Ba24C1614A9ADC6C35C54edBe0900"
       abi: LaunchpadContract
-      startBlock: 5544450
+      startBlock: 5837004
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
