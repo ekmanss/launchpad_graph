@@ -1,4 +1,4 @@
-import {Address, BigInt, log} from "@graphprotocol/graph-ts";
+import {Address, BigDecimal, BigInt, log} from "@graphprotocol/graph-ts";
 
 import {Token, TokenInfo} from "../../generated/schema";
 
@@ -31,6 +31,7 @@ export function getToken(address: string): Token {
         token.name = tokenInfo.name
         token.symbol = tokenInfo.symbol
         token.decimals = tokenInfo.decimal
+        token.derivedETH = BigDecimal.zero()
         token.tokenKey = "null"
         token.userCount = BigInt.zero()
         token.createdAtTimestamp = BigInt.zero()

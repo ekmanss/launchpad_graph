@@ -23,6 +23,8 @@ type Token @entity {
     name: String!
     symbol: String!
     decimals: BigInt!
+    # derived price in ETH
+    derivedETH: BigDecimal!
     tokenKey: String!
     userCount: BigInt!
     createdAtTimestamp: BigInt!

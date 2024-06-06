@@ -11,6 +11,7 @@
     "deploy_token_factory_blast_test": "graph codegen && graph build && graph deploy --studio token_factory_test",
     "deploy_tokenfactory_test": "graph codegen blast_testnet.yaml && graph build blast_testnet.yaml && graph deploy --studio tokenfactory_test blast_testnet.yaml",
     "deploy_tokenfactory_main": "graph codegen blast_main.yaml && graph build blast_main.yaml && graph deploy --studio tokenfactory_main blast_main.yaml",
+    "deploy_tokenfactory_dev": "graph codegen blast_main.yaml && graph build blast_main.yaml && graph deploy --studio tokenfactory_dev blast_main.yaml",
     "test": "graph test",
 
 

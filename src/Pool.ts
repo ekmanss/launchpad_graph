@@ -12,12 +12,26 @@ import {getToken} from "./entity/Token";
 import {getSwap} from "./entity/Swap";
 
 import {WETH} from "../config"
+import {sqrtPriceX96ToTokenPrices} from "./utils/pricing";
 
 
 export function handleSwap(event: SwapEvent): void {
     let pool = getPool(event.address.toHexString())
     let token0 = getToken(pool.token0)
     let token1 = getToken(pool.token1)
+
+    let sqrtPriceX96 = event.params.sqrtPriceX96
+    let prices = sqrtPriceX96ToTokenPrices(sqrtPriceX96, token0, token1)
+    let token0Price = prices[0]
+    let token1Price = prices[1]
+
+    // if weth in pair
+    if(token0.id == WETH || token1.id == WETH){
+        token0.derivedETH = token1Price
+        token1.derivedETH = token0Price
+    }
+    token0.save()
+    token1.save()
 
     // amounts - 0/1 are token deltas: can be positive or negative
     let amount0 = convertTokenToDecimal(event.params.amount0, token0.decimals)
@@ -46,18 +60,18 @@ export function handleSwap(event: SwapEvent): void {
 
     if (token0.id == WETH) {
         // if weth amount > 0  buy(0)
-        if(amount0.gt(BigDecimal.zero())){
+        if (amount0.gt(BigDecimal.zero())) {
             swap.type = BigInt.fromI32(0)
-        }else{
+        } else {
             swap.type = BigInt.fromI32(1)
 
         }
     }
     if (token1.id == WETH) {
         // if weth amount > 0  buy(0)
-        if(amount1.gt(BigDecimal.zero())){
+        if (amount1.gt(BigDecimal.zero())) {
             swap.type = BigInt.fromI32(0)
-        }else{
+        } else {
             swap.type = BigInt.fromI32(1)
         }
     }
